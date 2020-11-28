@@ -17,7 +17,8 @@ defmodule MonoHackWeb.Router do
   scope "/", MonoHackWeb do
     pipe_through :browser
 
-    live "/", PageLive, :index
+    # live "/", PageLive, :index
+    resources "/", CustomerController, only: [:index, :new, :show, :create]
   end
 
   # Other scopes may use custom stacks.
