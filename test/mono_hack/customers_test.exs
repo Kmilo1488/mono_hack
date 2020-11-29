@@ -7,7 +7,6 @@ defmodule MonoHack.CustomersTest do
     alias MonoHack.Customers.Customer
 
     @valid_attrs %{email: "some email", name: "some name"}
-    @update_attrs %{email: "some updated email", name: "some updated name"}
     @invalid_attrs %{email: nil, name: nil}
 
     def customer_fixture(attrs \\ %{}) do
@@ -26,7 +25,9 @@ defmodule MonoHack.CustomersTest do
 
     test "get_customer!/1 returns the customer with given id" do
       customer = customer_fixture()
-      assert Customers.get_customer!(customer.id) == customer
+      get_customer = Customers.get_customer!(customer.id)
+      assert customer.email == get_customer.email
+      assert customer.name == get_customer.name
     end
 
     test "create_customer/1 with valid data creates a customer" do

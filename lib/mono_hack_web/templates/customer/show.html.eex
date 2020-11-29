@@ -1,7 +1,6 @@
 <h1>Show Customer</h1>
 
 <ul>
-
   <li>
     <strong>Name:</strong>
     <%= @customer.name %>
@@ -11,7 +10,29 @@
     <strong>Email:</strong>
     <%= @customer.email %>
   </li>
-
 </ul>
+
+<%= if @customer.balance === nil do %>
+  <%= render "add_balance.html", customer: @customer, changeset: @changeset, action: Routes.customer_customer_path(@conn, :add_balance, @customer) %>
+<% else %>
+  <table>
+    <thead>
+      <tr>
+        <th>Balance</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>$ <%= @customer.balance.amount %></td>
+
+        <td>
+          <span><%= link "Show", to: Routes.customer_balance_path(@conn, :show, @customer, @customer.balance) %></span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+<% end %>
+
 
 <span><%= link "Back", to: Routes.customer_path(@conn, :index) %></span>
