@@ -6,15 +6,11 @@ To start your Phoenix server:
   * Create and migrate your database with `mix ecto.setup`
   * Install Node.js dependencies with `npm install` inside the `assets` directory
   * Start Phoenix endpoint with `mix phx.server`
+  * Runs Test `mix test`
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
-
-## Learn more
-
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+  * TransactionLiveView go to `http://localhost:4000/transactions`
+  * API transaction POST `http://localhost:4000/api/transaction`
+    * transfer_types `["debit", "credit"]`
+    * Body example `{ amount": 100, transfer_type": "credit", balance_id": 1 }`
