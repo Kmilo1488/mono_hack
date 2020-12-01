@@ -1,10 +1,8 @@
 defmodule MonoHack.Balances do
   import Ecto.Query, warn: false
   alias MonoHack.Repo
-  require IEx
 
   alias MonoHack.Balances.Balance
-  alias MonoHack.Transactions
 
   def get_balance!(id) do
     Balance
@@ -19,12 +17,25 @@ defmodule MonoHack.Balances do
   end
 
   def transfer_call(attrs) do
-    amount = String.to_integer(attrs["amount"])
+    amount = validate_amount(attrs["amount"])
+    if amount > 0 and amount do
+      cond do
+        attrs["transfer_type"] == "debit" ->
+          debit(attrs["balance_id"], amount)
+        attrs["transfer_type"] == "credit" ->
+          credit(attrs["balance_id"], amount)
+        true ->
+          false
+      end
+    end
+  end
+
+  defp validate_amount(amount) do
     cond do
-      attrs["transfer_type"] == "debit" ->
-        debit(attrs["balance_id"], amount)
-      attrs["transfer_type"] == "credit" ->
-        credit(attrs["balance_id"], amount)
+      String.valid?(amount) and String.length(amount) > 0 ->
+        String.to_integer(amount)
+      is_integer(amount) ->
+        amount
       true ->
         false
     end
@@ -42,10 +53,14 @@ defmodule MonoHack.Balances do
   end
 
   defp credit(id, amount) do
-    balance = Repo.get!(Balance, id)
-    new_amount = balance.amount + amount
-    Ecto.Changeset.change(balance, %{amount: new_amount}) |> Repo.update!
-    {:ok, balance}
+    if id do
+      balance = Repo.get!(Balance, id)
+      new_amount = balance.amount + amount
+      Ecto.Changeset.change(balance, %{amount: new_amount}) |> Repo.update!
+      {:ok, balance}
+    else
+      false
+    end
   end
 
   def change_balance(%Balance{} = balance, attrs \\ %{}) do

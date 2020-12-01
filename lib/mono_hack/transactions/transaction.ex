@@ -1,7 +1,6 @@
 defmodule MonoHack.Transactions.Transaction do
   use Ecto.Schema
   import Ecto.Changeset
-  require IEx
 
   schema "transactions" do
     field :amount, :integer

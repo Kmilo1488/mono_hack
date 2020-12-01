@@ -12,6 +12,7 @@ defmodule MonoHackWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+
   end
 
   scope "/", MonoHackWeb do
@@ -26,9 +27,11 @@ defmodule MonoHackWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", MonoHackWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", MonoHackWeb do
+    pipe_through :api
+
+    resources "/transaction", TransactionController, only: [:create, :show]
+  end
 
   # Enables LiveDashboard only for development
   #

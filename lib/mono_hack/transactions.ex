@@ -1,6 +1,5 @@
 defmodule MonoHack.Transactions do
   import Ecto.Query, warn: false
-  require IEx
 
   alias MonoHack.Repo
 
@@ -15,6 +14,8 @@ defmodule MonoHack.Transactions do
   def list_transactions do
     Repo.all(Transaction)
   end
+
+  def get_transaction!(id), do: Repo.get!(Transaction, id)
 
   def create_transaction(attrs \\ %{}) do
     %Transaction{}
