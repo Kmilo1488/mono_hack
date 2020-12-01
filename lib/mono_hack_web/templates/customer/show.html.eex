@@ -19,16 +19,14 @@
     <thead>
       <tr>
         <th>Balance</th>
-        <th></th>
+        <th>Balance Number</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td>$ <%= @customer.balance.amount %></td>
 
-        <td>
-          <span><%= link "Show", to: Routes.customer_balance_path(@conn, :show, @customer, @customer.balance) %></span>
-        </td>
+        <td><%= @customer.balance.id %></td>
       </tr>
     </tbody>
   </table>

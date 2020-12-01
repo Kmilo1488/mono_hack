@@ -35,7 +35,9 @@ defmodule MonoHack.BalancesTest do
 
     test "get_balance!/1 returns the balance with given id" do
       balance = balance_fixture()
-      assert Balances.get_balance!(balance.id) == balance
+      get_balance = Balances.get_balance!(balance.id)
+      assert balance.amount == get_balance.amount
+      assert balance.customer_id == get_balance.customer_id
     end
 
     test "create_balance/1 with valid data creates a balance" do

@@ -6,7 +6,10 @@ defmodule MonoHack.Customers do
   alias MonoHack.Balances
 
   def list_customers do
-    Repo.all(Customer)
+    Customer
+    |> Repo.all()
+    |> Repo.preload(:balance)
+
   end
 
   def get_customer!(id) do

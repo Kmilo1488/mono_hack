@@ -1,0 +1,33 @@
+<%= f = form_for @changeset, "#", [phx_change: :validate, phx_submit: :add] %>
+  <%= label f, :balance_id  %>
+  <%= select f, :balance_id, Enum.map(@customers, &{&1.name, &1.balance.id}), prompt: "Choose customer"  %>
+
+  <%= label f, :transfer_type, "Transfer type"  %>
+  <%= select f, :transfer_type, Enum.map(["debit", "credit"], fn(x) -> x end), prompt: "Choose transfer type"  %>
+
+  <%= label f, :amount %>
+  <%= number_input f, :amount, placeholder: "Amount" %>
+
+  <%= submit "Add", phx_disable_with: "Adding..." %>
+</form>
+
+<h1>Listing Transactions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Amount</th>
+      <th>Transfer type</th>
+      <th>Balance Number</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for transaction <- @transactions do %>
+      <tr>
+        <td>$ <%= transaction.amount %></td>
+        <td><%= transaction.transfer_type %></td>
+        <td><%= transaction.balance_id %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -17,10 +17,11 @@ defmodule MonoHackWeb.Router do
   scope "/", MonoHackWeb do
     pipe_through :browser
 
+    live "/transactions", TransactionLive, :index
+
     # live "/", PageLive, :index
     resources "/", CustomerController, only: [:index, :new, :show, :create] do
       post "/balance", CustomerController, :add_balance
-      resources "/balance", BalanceController, only: [:show]
     end
   end
 
